@@ -1,15 +1,20 @@
 using MaintenanceSystem.Data;
+using MaintenanceSystem.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
 namespace MaintenanceSystem
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            //database connection
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            //identity configuration
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
             // Add services to the container.
@@ -28,8 +33,9 @@ namespace MaintenanceSystem
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
