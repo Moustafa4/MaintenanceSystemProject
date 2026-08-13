@@ -53,8 +53,3 @@ Employee يفتح تذكرة (Pending) → ITManager/Admin يعين فني (تت
 - `Controllers/DashboardController.cs` - الأرقام (Total, Open, In Progress, Resolved, Overdue)
 - `Controllers/ReportsController.cs` - أداء الفنيين
 - `Controllers/AdminController.cs` - المستخدمين + الشركات + الأقسام + الأجهزة + قطع الغيار + SLA
-
-## 8. حاجات ممكن تتضاف لاحقًا
-- رفع مرفقات فعلي في صفحة تفاصيل التذكرة (الكود جاهز في الكونترولر، محتاج فورم في الـView)
-- Job دوري يحدث IsOverdue تلقائي بدل ما يتحسب وقت العرض بس
-- صفحة Edit/Delete للأجهزة والأقسام (دلوقتي بس Create + List)
