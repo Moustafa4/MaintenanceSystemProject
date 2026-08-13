@@ -15,11 +15,11 @@ namespace MaintenanceSystem.Models.Entities
         [Required]
         public TicketStatus Status { get; set; }
 
-        public string CreatedByUserId { get; set; }
+        public int CreatedByUserId { get; set; }
 
         public ApplicationUser CreatedByUser { get; set; }
 
-        public string AssignedTechnicianId { get; set; }
+        public int? AssignedTechnicianId { get; set; }
 
         public ApplicationUser AssignedTechnician { get; set; }
         [Required]
@@ -31,7 +31,7 @@ namespace MaintenanceSystem.Models.Entities
 
         public Department Department { get; set; }
 
-        public string DeviceOwnerUserId { get; set; }
+        public int? DeviceOwnerUserId { get; set; }
 
         public ApplicationUser DeviceOwnerUser { get; set; }
 

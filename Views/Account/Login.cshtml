@@ -1,0 +1,51 @@
+﻿@model MaintenanceSystem.Models.ViewModels.LoginViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    <div class="d-flex align-items-center justify-content-center" style="min-height: 90vh;">
+        <div class="card shadow-sm" style="width: 100%; max-width: 400px;">
+            <div class="card-body p-4">
+
+                <div class="text-center mb-4">
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                         style="width: 64px; height: 64px;">
+                        <i class="bi bi-tools text-primary fs-3"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">Welcome back</h3>
+                    <p class="text-muted mb-0">Login to Maintenance System</p>
+                </div>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger py-2 text-center">@ViewBag.Error</div>
+                }
+
+                <form asp-action="LoginBtn" asp-controller="Account" method="post">
+                    <div asp-validation-summary="All" class="text-danger small"></div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email">
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password">
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 mt-2">Login</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+}

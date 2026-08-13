@@ -16,7 +16,7 @@ namespace MaintenanceSystem.Models.Entities
 
         public Department Department { get; set; }
 
-        public string AssignedToUserId { get; set; }
+        public int? AssignedToUserId { get; set; }
 
         public ApplicationUser AssignedToUser { get; set; }
 

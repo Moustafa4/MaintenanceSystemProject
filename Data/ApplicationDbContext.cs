@@ -1,14 +1,14 @@
 ﻿using MaintenanceSystem.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace MaintenanceSystem.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+        public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Device> Devices { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
@@ -35,18 +35,18 @@ namespace MaintenanceSystem.Data
                 .OnDelete(DeleteBehavior.Restrict);
             //tickets with users created
             modelBuilder.Entity<Ticket>()
-                .HasOne(t => t.CreatedByUser)
-                .WithMany(u => u.CreatedTickets)
-                .HasForeignKey(t => t.CreatedByUserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                  .HasOne(t => t.CreatedByUser)
+                  .WithMany(u => u.CreatedTickets)
+                  .HasForeignKey(t => t.CreatedByUserId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
             //tickets with users technicians
 
             modelBuilder.Entity<Ticket>()
-                .HasOne(t => t.AssignedTechnician)
-                .WithMany(u => u.AssignedTickets)
-                .HasForeignKey(t => t.AssignedTechnicianId)
-                .OnDelete(DeleteBehavior.Restrict);
+               .HasOne(t => t.AssignedTechnician)
+               .WithMany(u => u.AssignedTickets)
+               .HasForeignKey(t => t.AssignedTechnicianId)
+               .OnDelete(DeleteBehavior.Restrict);
             //User → OwnedTickets
             modelBuilder.Entity<Ticket>()
                 .HasOne(t => t.DeviceOwnerUser)
