@@ -23,10 +23,10 @@ namespace MaintenanceSystem
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-          
+
 
             var app = builder.Build();
-   
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -43,8 +43,9 @@ namespace MaintenanceSystem
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=GoToLoginForm}/{id?}")
+          pattern: "{controller=Account}/{action=GoToLoginForm}/{id?}")
                 .WithStaticAssets();
+
 
             app.Run();
         }
