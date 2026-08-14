@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MaintenanceSystem.Data;
 namespace MaintenanceSystem.Models.Entities
 {
     public class Ticket
@@ -45,20 +46,5 @@ namespace MaintenanceSystem.Models.Entities
 
         public DateTime? ClosedAt { get; set; }
     }
-    public enum TicketPriority
-    {
-        Low,
-        Medium,
-        High,
-        Critical
-    }
 
-    public enum TicketStatus
-    {
-        Open,
-        Assigned,
-        InProgress,
-        Resolved,
-        Closed
-    }
 }
