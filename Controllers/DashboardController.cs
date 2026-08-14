@@ -1,4 +1,5 @@
 ﻿using MaintenanceSystem.Data;
+using MaintenanceSystem.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaintenanceSystem.Controllers
@@ -11,8 +12,15 @@ namespace MaintenanceSystem.Controllers
         {
             _context = context;
         }
+
         public IActionResult Index()
         {
+
+            if (!HttpContext.Session.IsAdmin())
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+
             ViewBag.UsersCount = _context.Users.Count();
             ViewBag.DevicesCount = _context.Devices.Count();
             ViewBag.TicketsCount = _context.Tickets.Count();

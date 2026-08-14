@@ -37,7 +37,7 @@ namespace MaintenanceSystem.Controllers
                 user.Role.ToString(),
                 user.DepartmentId);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard");
         }
         public IActionResult LogoutBtn()
         {
