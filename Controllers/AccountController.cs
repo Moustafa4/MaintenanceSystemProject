@@ -1,6 +1,5 @@
 ﻿using MaintenanceSystem.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using MaintenanceSystem.Helpers;
 
 namespace MaintenanceSystem.Controllers
@@ -32,21 +31,18 @@ namespace MaintenanceSystem.Controllers
                 return View("Login");
             }
 
-            var userData = new
-            {
-                Id = user.Id,
-                FullName = user.FullName,
-                Role = user.Role.ToString(),
-                DepartmentId = user.DepartmentId
-            };
-
-            HttpContext.Session.SetString("User", JsonSerializer.Serialize(userData));
+            HttpContext.Session.SetUser(
+                user.Id,
+                user.FullName,
+                user.Role.ToString(),
+                user.DepartmentId);
 
             return RedirectToAction("Index", "Home");
         }
         public IActionResult LogoutBtn()
         {
-            HttpContext.Session.Clear();
+            HttpContext.Session.ClearUser();
+
             return RedirectToAction("GoToLoginForm");
         }
 

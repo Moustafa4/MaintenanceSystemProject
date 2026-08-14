@@ -23,8 +23,8 @@ public class ApplicationUser
 
     public DateTime CreatedAt { get; set; }
 
-    [Required]
-    public int DepartmentId { get; set; }
+   
+    public int? DepartmentId { get; set; }
 
     public Department Department { get; set; }
 

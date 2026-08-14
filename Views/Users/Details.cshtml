@@ -1,0 +1,98 @@
+﻿
+@model MaintenanceSystem.Models.Entities.ApplicationUser
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<div class="container">
+
+    <h2 class="mb-4">User Details</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Full Name
+                </div>
+
+                <div class="col-md-9">
+                    @Model.FullName
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Email
+                </div>
+
+                <div class="col-md-9">
+                    @Model.Email
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Role
+                </div>
+
+                <div class="col-md-9">
+                    <span class="badge bg-secondary">
+                        @Model.Role
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Department
+                </div>
+
+                <div class="col-md-9">
+                    @Model.Department?.Name
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Status
+                </div>
+
+                <div class="col-md-9">
+                    @if (Model.IsActive)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Inactive</span>
+                    }
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-3 fw-bold">
+                    Created At
+                </div>
+
+                <div class="col-md-9">
+                    @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                </div>
+            </div>
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn btn-primary">
+                Edit
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Back
+            </a>
+
+        </div>
+    </div>
+
+</div>

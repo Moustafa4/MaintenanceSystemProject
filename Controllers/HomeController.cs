@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MaintenanceSystem.Helpers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MaintenanceSystem.Controllers
 {
@@ -6,14 +7,11 @@ namespace MaintenanceSystem.Controllers
     {
         public IActionResult Index()
         {
-            var userJson = HttpContext.Session.GetString("User");
-
-            if (userJson == null)
+            if (!HttpContext.Session.IsLoggedIn())
             {
                 return RedirectToAction("GoToLoginForm", "Account");
             }
 
-            ViewBag.UserData = userJson;
             return View();
         }
     }
