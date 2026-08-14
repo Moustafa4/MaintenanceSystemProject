@@ -35,4 +35,6 @@ public class ApplicationUser
     public List<Ticket> AssignedTickets { get; set; }
 
     public List<Ticket> OwnedTickets { get; set; }
+
+    public List<Ticket> CancelledTickets { get; set; }
 }

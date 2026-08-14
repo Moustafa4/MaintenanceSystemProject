@@ -45,6 +45,11 @@ namespace MaintenanceSystem.Models.Entities
         public DateTime? ResolvedAt { get; set; }
 
         public DateTime? ClosedAt { get; set; }
+        public int? CancelledByUserId { get; set; }
+
+        public ApplicationUser CancelledByUser { get; set; }
+
+
     }
 
 }

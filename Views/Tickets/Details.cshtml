@@ -1,0 +1,233 @@
+﻿@using MaintenanceSystem.Data
+@using MaintenanceSystem.Helpers
+@model MaintenanceSystem.Models.Entities.Ticket
+
+@{
+    ViewData["Title"] = "Ticket Details";
+    var currentUser = Context.Session.GetUser();
+}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Ticket Details</h2>
+
+        @if (@currentUser.Role == "Admin")
+        {
+            <a asp-action="AllTickets" class="btn btn-secondary"> Back </a>
+        }
+        else if (@currentUser.Role == "Technician")
+        {
+
+            <a asp-action="AssignedTickets" class="btn btn-secondary"> Back </a>
+        }
+        else
+        {
+
+            <a asp-action="MyTickets" class="btn btn-secondary"> Back </a>
+        }
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Title
+                </div>
+
+                <div class="col-md-9">
+                    @Model.Title
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Description
+                </div>
+
+                <div class="col-md-9">
+                    @Model.Description
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Device
+                </div>
+
+                <div class="col-md-9">
+                    @Model.Device?.Name
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Serial Number
+                </div>
+
+                <div class="col-md-9">
+                    @Model.Device?.SerialNumber
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Department
+                </div>
+
+                <div class="col-md-9">
+                    @Model.Department?.Name
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Priority
+                </div>
+
+                <div class="col-md-9">
+                    @Model.Priority
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Status
+                </div>
+
+                <div class="col-md-9">
+                    <span class="badge bg-primary">
+                        @Model.Status
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Created By
+                </div>
+
+                <div class="col-md-9">
+                    @Model.CreatedByUser?.FullName
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Technician
+                </div>
+
+                <div class="col-md-9">
+                    @Model.AssignedTechnician?.FullName
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">
+                    Created At
+                </div>
+
+                <div class="col-md-9">
+                    @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                </div>
+            </div>
+
+            @if (Model.AssignedAt != null)
+            {
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">
+                        Assigned At
+                    </div>
+
+                    <div class="col-md-9">
+                        @Model.AssignedAt.Value.ToString("dd/MM/yyyy HH:mm")
+                    </div>
+                </div>
+            }
+
+            @if (Model.InProgressAt != null)
+            {
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">
+                        In Progress At
+                    </div>
+
+                    <div class="col-md-9">
+                        @Model.InProgressAt.Value.ToString("dd/MM/yyyy HH:mm")
+                    </div>
+                </div>
+            }
+
+            @if (Model.ResolvedAt != null)
+            {
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">
+                        Resolved At
+                    </div>
+
+                    <div class="col-md-9">
+                        @Model.ResolvedAt.Value.ToString("dd/MM/yyyy HH:mm")
+                    </div>
+                </div>
+            }
+
+            @if (Model.ClosedAt != null)
+            {
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">
+                        Closed At
+                    </div>
+
+                    <div class="col-md-9">
+                        @Model.ClosedAt.Value.ToString("dd/MM/yyyy HH:mm")
+                    </div>
+                </div>
+            }
+            @if (Model.Status == TicketStatus.Cancelled)
+            {
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">
+                        Cancelled By
+                    </div>
+
+                    <div class="col-md-9">
+                        @Model.CancelledByUser?.FullName
+                    </div>
+                </div>
+            }
+        @if (Model.Status == TicketStatus.Resolved)
+        {
+           
+
+            if (currentUser.Role == "Admin" ||
+            currentUser.Id == Model.CreatedByUserId)
+            {
+                <a asp-action="CloseTicket"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-success">
+                    Close Ticket
+                </a>
+            }
+        }
+        </div>
+        @if (currentUser.Role == "Admin" ||
+                (currentUser.Role == "Employee" &&
+                currentUser.Id == Model.CreatedByUserId))
+        {
+            if (Model.Status != TicketStatus.Closed &&
+            Model.Status != TicketStatus.Cancelled)
+            {
+                <a asp-action="CancelTicket"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-danger">
+                    Cancel Ticket
+                </a>
+            }
+        }
+        
+
+    </div>
+
+</div>
+

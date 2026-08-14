@@ -1,0 +1,234 @@
+﻿
+@using MaintenanceSystem.Data
+@model List<MaintenanceSystem.Models.Entities.Ticket>
+
+@{
+    ViewData["Title"] = "All Tickets";
+}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">Tickets</h2>
+            <p class="text-muted mb-0">
+                Manage all maintenance tickets
+            </p>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-4" id="ticketTabs">
+
+        <li class="nav-item">
+            <button class="nav-link active"
+                    onclick="filterTickets('All', this)">
+                All
+            </button>
+        </li>
+
+        <li class="nav-item">
+            <button class="nav-link"
+                    onclick="filterTickets('Open', this)">
+                Open
+            </button>
+        </li>
+
+        <li class="nav-item">
+            <button class="nav-link"
+                    onclick="filterTickets('Assigned', this)">
+                Assigned
+            </button>
+        </li>
+
+        <li class="nav-item">
+            <button class="nav-link"
+                    onclick="filterTickets('InProgress', this)">
+                In Progress
+            </button>
+        </li>
+
+        <li class="nav-item">
+            <button class="nav-link"
+                    onclick="filterTickets('Resolved', this)">
+                Resolved
+            </button>
+        </li>
+
+        <li class="nav-item">
+            <button class="nav-link"
+                    onclick="filterTickets('Closed', this)">
+                Closed
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link"
+                    onclick="filterTickets('Cancelled', this)">
+                Cancelled
+            </button>
+        </li>
+
+    </ul>
+
+
+    <!-- Tickets Table -->
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Created By</th>
+                        <th>Device</th>
+                        <th>Technician</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Cancelled By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="ticketsTable">
+
+                    @foreach (var ticket in Model)
+                    {
+                        <tr data-status="@ticket.Status">
+
+                            <td>
+                                @ticket.Title
+                            </td>
+
+                            <td>
+                                @ticket.CreatedByUser?.FullName
+                            </td>
+
+                            <td>
+                                @ticket.Device?.Name
+                            </td>
+
+                            <td>
+                                @ticket.AssignedTechnician?.FullName
+                            </td>
+
+                            <td>
+                                @ticket.Priority
+                            </td>
+                            
+                            <td>
+
+                                @if (ticket.Status == TicketStatus.Open)
+                                {
+                                    <span class="badge bg-danger">
+                                        Open
+                                    </span>
+                                }
+                                else if (ticket.Status == TicketStatus.Assigned)
+                                {
+                                    <span class="badge bg-primary">
+                                        Assigned
+                                    </span>
+                                }
+                                else if (ticket.Status == TicketStatus.InProgress)
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        In Progress
+                                    </span>
+                                }
+                                else if (ticket.Status == TicketStatus.Resolved)
+                                {
+                                    <span class="badge bg-success">
+                                        Resolved
+                                    </span>
+                                }
+                                else if (ticket.Status == TicketStatus.Closed)
+                                {
+                                    <span class="badge bg-secondary">
+                                        Closed
+                                    </span>
+                                }
+                                else if (ticket.Status == TicketStatus.Cancelled)
+                                {
+                                    <span class="badge bg-danger">
+                                        Cancelled
+                                    </span>
+                                }
+
+                            </td>
+                            <td>
+                                @if (ticket.Status == TicketStatus.Cancelled)
+                                {
+                                    @ticket.CancelledByUser?.FullName
+                                }
+                                else
+                                {
+                                    <p>-</p>
+                                }
+                            </td>
+                            <td>
+
+                                <a asp-action="Details"
+                                   asp-route-id="@ticket.Id"
+                                   class="btn btn-sm btn-outline-primary">
+                                    Details
+                                </a>
+
+                                @if (ticket.Status == TicketStatus.Open)
+                                {
+                                    <a asp-action="Assign"
+                                       asp-route-id="@ticket.Id"
+                                       class="btn btn-sm btn-primary">
+                                        Assign
+                                    </a>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function filterTickets(status, button) {
+
+        var rows = document.querySelectorAll("#ticketsTable tr");
+
+        rows.forEach(function (row) {
+
+            if (status === "All" ||
+                row.getAttribute("data-status") === status) {
+
+                row.style.display = "";
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+
+        var buttons = document.querySelectorAll("#ticketTabs .nav-link");
+
+        buttons.forEach(function (btn) {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+    }
+
+</script>

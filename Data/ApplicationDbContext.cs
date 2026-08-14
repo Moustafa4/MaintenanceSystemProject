@@ -1,5 +1,6 @@
 ﻿using MaintenanceSystem.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 namespace MaintenanceSystem.Data
 {
     public class ApplicationDbContext : DbContext
@@ -47,6 +48,15 @@ namespace MaintenanceSystem.Data
                .WithMany(u => u.AssignedTickets)
                .HasForeignKey(t => t.AssignedTechnicianId)
                .OnDelete(DeleteBehavior.Restrict);
+         
+            // User → CancelledTickets
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.CancelledByUser)
+                .WithMany(u => u.CancelledTickets)
+                .HasForeignKey(t => t.CancelledByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
             //User → OwnedTickets
             modelBuilder.Entity<Ticket>()
                 .HasOne(t => t.DeviceOwnerUser)

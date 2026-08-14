@@ -14,6 +14,7 @@
         Assigned,
         InProgress,
         Resolved,
-        Closed
+        Closed,
+        Cancelled
     }
 }

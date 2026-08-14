@@ -1,6 +1,7 @@
 ﻿using MaintenanceSystem.Data;
-using Microsoft.AspNetCore.Mvc;
 using MaintenanceSystem.Helpers;
+using MaintenanceSystem.Models.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MaintenanceSystem.Controllers
 {
@@ -37,7 +38,18 @@ namespace MaintenanceSystem.Controllers
                 user.Role.ToString(),
                 user.DepartmentId);
 
-            return RedirectToAction("Index", "Dashboard");
+            if (user.Role == Role.Admin)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            else if (user.Role == Role.Technician)
+            {
+                return RedirectToAction("AssignedTickets", "Tickets");
+            }
+            else // Employee
+            {
+                return RedirectToAction("MyTickets", "Tickets");
+            };
         }
         public IActionResult LogoutBtn()
         {

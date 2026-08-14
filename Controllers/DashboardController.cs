@@ -1,6 +1,7 @@
 ﻿using MaintenanceSystem.Data;
 using MaintenanceSystem.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace MaintenanceSystem.Controllers
 {
@@ -30,6 +31,8 @@ namespace MaintenanceSystem.Controllers
             ViewBag.InProgressTicketsCount = _context.Tickets.Count(t => t.Status == TicketStatus.InProgress);
             ViewBag.ResolvedTicketsCount = _context.Tickets.Count(t => t.Status == TicketStatus.Resolved);
             ViewBag.ClosedTicketsCount = _context.Tickets.Count(t => t.Status == TicketStatus.Closed);
+            ViewBag.CancelledTicketsCount = _context.Tickets.Count(t => t.Status == TicketStatus.Cancelled);
+
 
             return View();
         }

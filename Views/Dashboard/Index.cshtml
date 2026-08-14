@@ -151,6 +151,19 @@
                     <span>Closed Tickets</span>
                     <h3>@ViewBag.ClosedTicketsCount</h3>
                 </div>
+                <div class="col-xl col-md-6">
+                    <div class="status-card cancelled">
+                        <div class="status-icon">
+                            <i class="bi bi-x-circle-fill"></i>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div>
+                    <span>Cancelled Tickets</span>
+                    <h3>@ViewBag.CancelledTicketsCount</h3>
+                </div>
             </div>
         </div>
 
@@ -299,5 +312,11 @@
         background: #f1f3f5;
         color: #495057;
     }
+
+    .cancelled .status-icon {
+        background: #f8d7da;
+        color: #dc3545;
+    }
+
 
 </style>
